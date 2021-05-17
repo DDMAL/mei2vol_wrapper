@@ -23,8 +23,9 @@ class MEI2Vol(RodanTask):
         {
             "name": "MEI",
             "minimum": 1,
-            "maximum": 100,  # magic number, let us know what the max is TODO
+            "maximum": 0, 
             "resource_types": ["application/mei+xml"],  # double check dir
+            "is_list": True
         }
     ]
 
@@ -32,8 +33,9 @@ class MEI2Vol(RodanTask):
         {
             "name": "Volpiano",
             "minimum": 1,
-            "maximum": 100,
+            "maximum": 0,
             "resource_types": ["application/text"],
+            "is_list": True
         }
     ]
 
@@ -42,14 +44,14 @@ class MEI2Vol(RodanTask):
         # Testing with single input.
         volpianos = []
 
-        for element in inputs["MEI"]:
+        for element in inputs["MEI"]: # This may not work, check dictionary. 
             with open(element[0]["resource_path"], "r") as f:
                 volpianos.append(MEItoVolpiano.convert_mei_volpiano(f))
                 f.close()
-
+ 
         outfile_path = None
-        for i, entry in enumerate(volpianos):
-            outfile_path = outputs["Volpiano"][i]["resource_path"]
+        for i, entry in enumerate(volpianos): # Likewise, check dictionary.
+            outfile_path = outputs["Volpiano"][i]["resource_path"] # May need to point to [0]
             outfile = open(outfile_path, "w+")
             outfile.write(volpianos[i])
             outfile.close()
