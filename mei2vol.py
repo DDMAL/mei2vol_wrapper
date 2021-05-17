@@ -43,17 +43,18 @@ class MEI2Vol(RodanTask):
         """Skeleton of task runner. Not complete."""
         # Testing with single input.
         volpianos = []
+        mei_names = []
+        for input_type in inputs: 
+            for element in inputs[input_type]:
+                with open(element["resource_path"], "r") as infile:
+                    mei_names.append(infile)
+                    volpianos.append(MEItoVolpiano.convert_mei_volpiano(infile))
 
-        for element in inputs["MEI"]: # This may not work, check dictionary. 
-            with open(element[0]["resource_path"], "r") as f:
-                volpianos.append(MEItoVolpiano.convert_mei_volpiano(f))
-                f.close()
- 
-        outfile_path = None
-        for i, entry in enumerate(volpianos): # Likewise, check dictionary.
-            outfile_path = outputs["Volpiano"][i]["resource_path"] # May need to point to [0]
-            outfile = open(outfile_path, "w+")
-            outfile.write(volpianos[i])
-            outfile.close()
+        for output_type in outputs:
+            for i, output in enumerate(outputs[output_type]):
+                with open(output["resource_paht"], "w") as outfile:
+                    outfile.write(mei_names[i])
+                    outfile.write(volpianos[i])
+                    outfile.write("\n")
 
         return True
