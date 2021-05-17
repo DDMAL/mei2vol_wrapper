@@ -1,4 +1,4 @@
-import MEI2Volpiano from mei2volpiano
+from mei2volpiano import MEI2Volpiano
 from rodan.jobs.base import RodanTask
 from django.conf import settings as rodan_settings
 import json
@@ -48,7 +48,7 @@ class MEI2Vol(RodanTask):
             for element in inputs[input_type]:
                 with open(element["resource_path"], "r") as infile:
                     mei_names.append(infile)
-                    volpianos.append(MEItoVolpiano.convert_mei_volpiano(infile))
+                    volpianos.append(MEI2Volpiano.convert_mei_volpiano(infile))
 
         for output_type in outputs:
             for i, output in enumerate(outputs[output_type]):
