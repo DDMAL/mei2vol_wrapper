@@ -32,8 +32,6 @@ class MEI2Vol(RodanTask):
     def run_my_task(self, inputs, settings, outputs):
         '''Skeleton of task runner. Not complete.
         '''
-        if "@done" not in settings:
-            return self.WAITING_FOR_INPUT()
         # Testing with single input.
         volpianos = []
 
