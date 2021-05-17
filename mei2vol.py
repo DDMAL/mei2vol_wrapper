@@ -35,12 +35,18 @@ class MEI2Vol(RodanTask):
         if "@done" not in settings:
             return self.WAITING_FOR_INPUT()
         # Testing with single input.
-        volpiano = []
+        volpianos = []
 
-        with open(inputs["MEI"][0]["resource_path"], "r") as f:
-            volpiano.append(mei2volpiano.MEItoVolpiano.convert_mei_volpiano(f))
+        for element in inputs["MEI"]:
+            with open (element[0]["resource_path"], "r") as f:
+              volpianos.append(mei2volpiano.MEItoVolpiano.convert_mei_volpiano(f))
+              f.close()  
+        
+        outfile_path = None
+        for i, entry in enumerate(volpianos):
+            outfile_path = outputs["Volpiano"][i]["resource_path"]
+            outfile = open(outfile_path, "w+")
+            outfile.write(volpianos[i])
+            outfile.close()
 
-        outfile_path = outputs["Volpiano"][0]["resource_path"]
-        outfile = open(outfile_path, "w")
-        outfile.write(volpiano[0])
-        outfile.close()
+        return True
