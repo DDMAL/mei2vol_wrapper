@@ -41,6 +41,6 @@ class MEI2Vol(RodanTask):
             volpiano.append(mei2volpiano.MEItoVolpiano.convert_mei_volpiano(f))
 
         outfile_path = outputs["Volpiano"][0]["resource_path"]
-        outfile = open('volpiano.txt', "w")
+        outfile = open(outfile_path, "w")
         outfile.write(volpiano[0])
         outfile.close()
