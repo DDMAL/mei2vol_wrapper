@@ -1,7 +1,12 @@
-from mei2volpiano import MEI2Volpiano
 from rodan.jobs.base import RodanTask
 from django.conf import settings as rodan_settings
 import json
+
+# hacky way to avoid errors in Rodan (as brought up by Tim)
+try:
+    from mei2volpiano import MEI2Volpiano
+except(ImportError):
+    pass
 
 
 class MEI2Vol(RodanTask):
@@ -15,7 +20,7 @@ class MEI2Vol(RodanTask):
         "job_queue": "Python3",
         "properties": {"Output": {"type": "string", "default": ""}},
     }
-    enabled = False  # for now
+    enabled = True  # for now
     category = "Type conversion"
     interactive = False
 
@@ -25,7 +30,7 @@ class MEI2Vol(RodanTask):
             "minimum": 1,
             "maximum": 0, 
             "resource_types": ["application/mei+xml"],  # double check dir
-            "is_list": True
+            #"is_list": True
         }
     ]
 
@@ -34,8 +39,8 @@ class MEI2Vol(RodanTask):
             "name": "Volpiano",
             "minimum": 1,
             "maximum": 0,
-            "resource_types": ["application/text"],
-            "is_list": True
+            "resource_types": ["text/plain"],
+            #"is_list": True
         }
     ]
 
