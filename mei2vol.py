@@ -9,6 +9,7 @@ class MEI2Vol(RodanTask):
     author = "Ravi Raina, Kemal Kongar, & Gabrielle Halpin"
     description = "Converts MEI or XML files into volpiano strings."
     settings = {
+        # not complete till working on it
         "title": "Parameters",
         "type": "object",
         "job_queue": "Python3",
@@ -38,16 +39,14 @@ class MEI2Vol(RodanTask):
 
     def run_my_task(self, inputs, settings, outputs):
         """Skeleton of task runner. Not complete."""
-        if "@done" not in settings:
-            return self.WAITING_FOR_INPUT()
         # Testing with single input.
         volpianos = []
 
         for element in inputs["MEI"]:
-            with open (element[0]["resource_path"], "r") as f:
-              volpianos.append(mei2volpiano.MEItoVolpiano.convert_mei_volpiano(f))
-              f.close()  
-        
+            with open(element[0]["resource_path"], "r") as f:
+                volpianos.append(mei2volpiano.MEItoVolpiano.convert_mei_volpiano(f))
+                f.close()
+
         outfile_path = None
         for i, entry in enumerate(volpianos):
             outfile_path = outputs["Volpiano"][i]["resource_path"]
