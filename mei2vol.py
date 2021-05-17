@@ -1,11 +1,18 @@
 from rodan.jobs.base import RodanTask
+from django.conf import settings as rodan_settings
+import json
 
 
 class MEI2Vol(RodanTask):
     name = "MEI2Volpiano"
     author = "Ravi Raina, Kemal Kongar, & Gabrielle Halpin"
     description = "Converts MEI or XML files into volpiano strings."
-    # settings TODO
+    settings = {
+        "title": "Parameters",
+        "type": "object",
+        "job_queue": "Python3",
+        "properties": {"Output": {"type": "string", "default": ""}},
+    }
     enabled = False  # for now
     category = "Type conversion"
     interactive = False
@@ -29,9 +36,6 @@ class MEI2Vol(RodanTask):
     ]
 
     def run_my_task(self, inputs, settings, outputs):
-        if '@done' not in settings:
+        if "@done" not in settings:
             return self.WAITING_FOR_INPUT()
         # TODO: Implement rest of method
-    
-
-
