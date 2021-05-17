@@ -24,6 +24,6 @@ class MEI2Vol(RodanTask):
             'name': 'Volpiano',
             'minimum': 1,
             'maximum': 100,
-            'resource_types': ['application/mei+xml']
+            'resource_types': ['application/text']
         }
     ]
