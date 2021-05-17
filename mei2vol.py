@@ -3,7 +3,7 @@ from rodan.jobs.base import RodanTask
 
 class MEI2Vol(RodanTask):
     name = "MEI2Volpiano"
-    authors = "DDMAL"
+    author = "Ravi Raina, Kemal Kongar, & Gabrielle Halpin"
     description = "Converts MEI or XML files into volpiano strings."
     # settings TODO
     enabled = False  # for now
@@ -27,3 +27,11 @@ class MEI2Vol(RodanTask):
             "resource_types": ["application/text"],
         }
     ]
+
+    def run_my_task(self, inputs, settings, outputs):
+        if '@done' not in settings:
+            return self.WAITING_FOR_INPUT()
+        # TODO: Implement rest of method
+    
+
+
