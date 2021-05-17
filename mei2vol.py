@@ -30,6 +30,17 @@ class MEI2Vol(RodanTask):
     ]
 
     def run_my_task(self, inputs, settings, outputs):
+        '''Skeleton of task runner. Not complete.
+        '''
         if "@done" not in settings:
             return self.WAITING_FOR_INPUT()
-        # TODO: Implement rest of method
+        # Testing with single input.
+        volpiano = []
+
+        with open(inputs["MEI"][0]["resource_path"], "r") as f:
+            volpiano.append(mei2volpiano.MEItoVolpiano.convert_mei_volpiano(f))
+
+        outfile_path = outputs["Volpiano"][0]["resource_path"]
+        outfile = open('volpiano.txt', "w")
+        outfile.write(volpiano[0])
+        outfile.close()
