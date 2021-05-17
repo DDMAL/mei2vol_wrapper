@@ -1,12 +1,20 @@
 import mei2volpiano
 from rodan.jobs.base import RodanTask
+from django.conf import settings as rodan_settings
+import json
 
 
 class MEI2Vol(RodanTask):
     name = "MEI2Volpiano"
     author = "Ravi Raina, Kemal Kongar, & Gabrielle Halpin"
     description = "Converts MEI or XML files into volpiano strings."
-    settings = {"job_queue": "Python3"}
+    settings = {
+        # not complete till working on it
+        "title": "Parameters",
+        "type": "object",
+        "job_queue": "Python3",
+        "properties": {"Output": {"type": "string", "default": ""}},
+    }
     enabled = False  # for now
     category = "Type conversion"
     interactive = False
@@ -30,8 +38,7 @@ class MEI2Vol(RodanTask):
     ]
 
     def run_my_task(self, inputs, settings, outputs):
-        '''Skeleton of task runner. Not complete.
-        '''
+        """Skeleton of task runner. Not complete."""
         # Testing with single input.
         volpianos = []
 
