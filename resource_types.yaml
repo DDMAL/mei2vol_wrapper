@@ -1,0 +1,6 @@
+- mimetype: application/mei+xml
+  extension: mei
+  description: Music Encoding Initiative
+- mimetype: application/text
+  extension: txt
+  description: volpiano txt file
