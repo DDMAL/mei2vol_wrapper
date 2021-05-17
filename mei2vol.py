@@ -1,3 +1,4 @@
+import mei2volpiano
 from rodan.jobs.base import RodanTask
 
 
@@ -5,7 +6,7 @@ class MEI2Vol(RodanTask):
     name = "MEI2Volpiano"
     author = "Ravi Raina, Kemal Kongar, & Gabrielle Halpin"
     description = "Converts MEI or XML files into volpiano strings."
-    # settings TODO
+    settings = {"job_queue": "Python3"}
     enabled = False  # for now
     category = "Type conversion"
     interactive = False
@@ -29,9 +30,6 @@ class MEI2Vol(RodanTask):
     ]
 
     def run_my_task(self, inputs, settings, outputs):
-        if '@done' not in settings:
+        if "@done" not in settings:
             return self.WAITING_FOR_INPUT()
         # TODO: Implement rest of method
-    
-
-
