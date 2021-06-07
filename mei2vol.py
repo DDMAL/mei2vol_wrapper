@@ -1,13 +1,9 @@
 from rodan.jobs.base import RodanTask
 
-# potentially needed
-# from django.conf import settings as rodan_settings
-import json
-
-# avoid python3 conflict in Rodan
+# avoid python 2/3 conflict in Rodan
 try:
-    from mei2volpiano import MEI2Volpiano
-except(ImportError):
+    from . import mei2volpiano
+except (SystemError, ImportError, SyntaxError):
     pass
 
 # Rodan job
@@ -31,7 +27,6 @@ class MEI2Vol(RodanTask):
             "minimum": 1,
             "maximum": 1, 
             "resource_types": ["application/mei+xml"],
-            #"is_list": True
         }
     ]
 
@@ -41,25 +36,21 @@ class MEI2Vol(RodanTask):
             "minimum": 1,
             "maximum": 1,
             "resource_types": ["text/plain"],
-            #"is_list": True
         }
     ]
 
+    # Runs the MEI2Volpiano conversion and returns a txt file output
     def run_my_task(self, inputs, settings, outputs):
-        # Testing with single input.
-        volpianos = []
-        mei_names = []
-        for input_type in inputs: 
-            for element in inputs[input_type]:
-                with open(element["resource_path"], "r") as infile:
-                    mei_names.append(infile)
-                    volpianos.append(MEI2Volpiano.convert_mei_volpiano(infile))
-
-        for output_type in outputs:
-            for i, output in enumerate(outputs[output_type]):
-                with open(output["resource_path"], "w") as outfile:
-                    outfile.write(mei_names[i])
-                    outfile.write(volpianos[i])
-                    outfile.write("\n")
-
+        lib = mei2volpiano.MEItoVolpiano()
+        outfile_path = outputs['Volpiano'][0]['resource_path']
+        outfile = open(outfile_path, "w")
+        if 'MEI' in inputs:
+            infile_path = inputs['MEI'][0]['resource_path']
+            infile = open(infile_path, "r")
+            volpiano = lib.convert_mei_volpiano(infile)
+            outfile.write(volpiano)
+            infile.close()
+        else:
+            outfile.write("Could not write properly.")
+        outfile.close()
         return True
