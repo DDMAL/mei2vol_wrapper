@@ -1,10 +1,11 @@
 from rodan.jobs.base import RodanTask
+import mei2volpiano
 
 # avoid python 2/3 conflict in Rodan
-try:
-    from . import mei2volpiano
-except (SystemError, ImportError, SyntaxError):
-    pass
+#try:
+#    from . import mei2volpiano
+#except (SystemError, ImportError, SyntaxError):
+#    pass
 
 # Rodan job
 class MEI2Vol(RodanTask):
